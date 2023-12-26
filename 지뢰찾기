@@ -1,0 +1,118 @@
+#include <iostream>
+#include<string>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+
+	
+int main() {
+	srand(static_cast<unsigned int>(time(NULL)));
+
+	int boom_row[5], boom_column[5];
+	
+	
+	bool check;
+	do {
+		for (int i = 0; i < 5; i++) {
+			boom_row[i] = rand() % 5;
+			boom_column[i] = rand() % 5;
+		}
+
+		
+		check = true;
+		for (int i = 0; i < 4 ; i++) {
+			for (int j = i + 1; j < 5 ; j++) {
+				if (boom_row[i] == boom_row[j] && boom_column[i] == boom_column[j]) {
+					check = false;
+				}
+			}
+		}
+	} while (check==false);
+
+	string box[5][5];
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			box[i][j] = 'X';
+			
+
+		}
+	}
+	
+	for (int i = 0; i < 5; i++) {
+		box[boom_row[i]][boom_column[i]] = 'O';
+	}
+	
+	string realbox[7][7];
+	for (int i = 0; i < 7; i++) {
+		for (int j = 0; j < 7; j++) {
+			realbox[i][j] = 'X';
+
+
+		}
+	}
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+
+			realbox[i + 1][j + 1] = box[i][j];
+
+		}
+	}
+
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			cout << box[i][j] << '	';
+		}
+		cout << "\n";
+	}
+	cout << endl;
+	
+	
+	string game[5][5];
+	for (int i = 0; i < 5; i++) {
+		for(int j = 0; j < 5; j++) {
+			game[i][j] = 'X';
+		}
+	}
+
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			cout << game[i][j] << "	";
+		}
+		cout << endl;
+	}
+	int gameRow, gameColumn;
+	
+	bool check2;
+	do {
+			cout << "choose number (1~5) for row and column to click \n row    : ";
+			cin >> gameRow;
+			cout << "\n column : ";
+			cin >> gameColumn;
+			check2 = true;
+			if (box[gameRow - 1][gameColumn - 1] == "O") {
+				cout << " you failed ! there is boom ! ";
+				check2 = false;
+				continue;
+			}
+			int count = 0;
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					if (realbox[gameRow  + i][gameColumn  + j] == "O") {
+						count += 1;
+					}
+				}
+			}
+			game[gameRow - 1][gameColumn - 1] = to_string(count);
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 5; j++) {
+					cout << game[i][j] << "	";
+				}
+				cout << endl;
+			}
+	} while (check2 == true);
+	
+
+	
+	
+}
